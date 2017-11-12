@@ -1,3 +1,36 @@
-<p>
-  upload works!
-</p>
+<div class="row">
+  <div class="col-md-4">
+    <h3>Seleccione archivos</h3>
+    <div class="well drop-zone">
+      <h4>Suelta los archivos aqui</h4>
+      <img src="assets/img/drop-images.png" alt="">
+    </div>
+  </div>
+
+  <div class="col-md-8" style="margin-bottom: 40px">
+    <h3>Cargar archivos</h3>
+    <button class="btn btn-success" (click)="uploadImagesToFirebase()" [disabled]="filesToSave.length === 0 || !allowedSaveFile">Cargar a firebase</button>
+    <button class="btn btn-danger" (click)="clearFiles()">Limpiar archivos</button>
+    <table class="table"  *ngIf="filesToSave.length>0">
+      <thead class="thead-inverse">
+        <th>Nombre</th>
+        <th>Tamaño</th>
+        <th>Progreso</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>

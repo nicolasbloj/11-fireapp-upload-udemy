@@ -4,14 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { APP_ROUTING } from './app.routes';
 import { AppComponent } from './app.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { PhotosComponent } from './components/photos/photos.component';
 import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { environment } from '../environments/environment';
     APP_ROUTING,
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
   ],
-  providers: [UploadImagesService],
+  providers: [UploadImagesService, AngularFireDatabase],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
