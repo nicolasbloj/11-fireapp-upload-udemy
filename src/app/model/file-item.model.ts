@@ -3,7 +3,8 @@ export class FileItem {
     public file: File;
     public name: string;
     public url: string;
-    public uploadingStatus = false; // uploading...
+
+    public uploading = false;
     public progress = 0;
 
     constructor(file: File) {
