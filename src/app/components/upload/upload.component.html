@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4">
     <h3>Seleccione archivos</h3>
-    <div class="well drop-zone" appNgDropFiles (fileOver)="isOnDropZone($event)" [ngClass]="{'file-over' : fileIsOnDropZone}">
+    <div class="well drop-zone" appNgDropFiles [files]="filesToSave" (emitterFileOver)="isOnDropZone($event)" [ngClass]="{'file-over' : fileIsOnDropZone}">
       <h4>Suelta los archivos aqui</h4>
       <img src="assets/img/drop-images.png" alt="">
     </div>
@@ -13,24 +13,29 @@
     <button class="btn btn-danger" (click)="clearFiles()">Limpiar archivos</button>
     <table class="table" *ngIf="filesToSave.length>0">
       <thead class="thead-inverse">
+        <th></th>
         <th>Nombre</th>
         <th>Tamaño</th>
         <th>Progreso</th>
       </thead>
       <tbody>
-        <tr>
+        <tr *ngFor="let fileitem of filesToSave; let i=index" [ngClass]="{ 'text-green' : fileitem.uploading }">
           <td>
-
+            {{ i }}
           </td>
           <td>
-
+            {{ fileitem.name }}
           </td>
           <td>
-
+            {{ fileitem.file.size / 1024 / 1024 | number: '.2' }} MB
+          </td>
+          <td>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width' : fileitem.progress + '%' }"></div>
+            </div>
           </td>
         </tr>
       </tbody>
-
     </table>
   </div>
 </div>

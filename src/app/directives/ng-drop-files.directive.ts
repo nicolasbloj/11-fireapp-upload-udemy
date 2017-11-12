@@ -9,8 +9,12 @@ export class NgDropFilesDirective {
   @Input()
   files: FileItem[] = [];
 
+  // @Output()
+  // emitterFilesToSave: EventEmitter<FileItem[]> = new EventEmitter<FileItem[]>();
+  // no es necesario.
+
   @Output()
-  fileOver: EventEmitter<boolean> = new EventEmitter<boolean>();
+  emitterFileOver: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   // hacemos referenca al elemento html
   constructor(public _elementRef: ElementRef) {
@@ -18,12 +22,12 @@ export class NgDropFilesDirective {
 
   @HostListener('dragenter', ['$event'])
   public onDragEnter(event: any) {
-    this.fileOver.emit(true);
+    this.emitterFileOver.emit(true);
   }
 
   @HostListener('dragleave', ['$event'])
   public onDragLeave(event: any) {
-    this.fileOver.emit(false);
+    this.emitterFileOver.emit(false);
   }
 
   @HostListener('dragover', ['$event'])
@@ -31,7 +35,7 @@ export class NgDropFilesDirective {
     const transfer: any = this._getTransfer(event);
     transfer.dropEffect = 'copy';
     this._preventAndStop(event);
-    this.fileOver.emit(true);
+    this.emitterFileOver.emit(true);
   }
 
   @HostListener('drop', ['$event'])
@@ -41,6 +45,8 @@ export class NgDropFilesDirective {
       return;
     }
     this._addFiles(transfer.files);
+    this.emitterFileOver.emit(false);
+
     this._preventAndStop(event);
   }
 
@@ -87,6 +93,21 @@ export class NgDropFilesDirective {
 
 
   private _addFiles(fileList: FileList) {
-    console.log('filelist ', fileList);
+
+    // propiedad o indice.
+    // tslint:disable-next-line:forin
+    for (const property in Object.getOwnPropertyNames(fileList)) {
+      const file_tmp = fileList[property];
+
+      if (this._fileCanSave(file_tmp)) {
+        const newFile = new FileItem(file_tmp);
+        this.files.push(newFile);
+      }
+    }
+
+    console.log('files ', this.files);
+
+    // this.emitterFilesToSave.emit(this.files);
+
   }
 }

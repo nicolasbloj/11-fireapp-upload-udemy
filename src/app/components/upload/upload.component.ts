@@ -11,7 +11,7 @@ import { FileItem } from '../../model/file-item.model';
 export class UploadComponent {
 
   fileIsOnDropZone = false;
-  allowedSaveFile = false;
+  allowedSaveFile = true;
   filesToSave: FileItem[] = [];
 
   constructor(public _uploadImagesService: UploadImagesService) { }
@@ -30,4 +30,7 @@ export class UploadComponent {
     this.fileIsOnDropZone = event;
   }
 
+  receiveFilesToSave(event: any) {
+    this.filesToSave = event;
+  }
 }
