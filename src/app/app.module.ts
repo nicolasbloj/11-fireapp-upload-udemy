@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { PhotosComponent } from './components/photos/photos.component';
 import { environment } from '../environments/environment';
+import { NgDropFilesDirective } from './directives/ng-drop-files.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
-    PhotosComponent
+    PhotosComponent,
+    NgDropFilesDirective
   ],
   imports: [
     BrowserModule,
