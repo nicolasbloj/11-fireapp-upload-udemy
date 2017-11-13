@@ -1,3 +1,11 @@
-<p>
-  photos works!
-</p>
+<div class="row">
+    <div class="card-columns">
+        <div class="card" *ngFor="let fileitem of files">
+            <img class="card-img-top img-fluid" src="{{fileitem.url}}" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title">{{ fileitem.name }}</h4>
+                <!-- no tengo size por que no tengo file -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,8 +14,8 @@ export class UploadImagesService {
   constructor(public _angularFire: AngularFireDatabase) {
   }
 
-  listLastImages(numberImagesTolist: number): AngularFireList< any[] > {
-    return this._angularFire.list(`/${this.FOLDER_IMAGES}`, ref => ref.limitToLast(numberImagesTolist));
+  listLastImages(numberImagesTolist: number): Observable<any[]> {
+   return this._angularFire.list(`/${this.FOLDER_IMAGES}`, ref => ref.limitToLast(numberImagesTolist)).valueChanges();
   }
 
   loadImages(files: FileItem[]): void {
@@ -30,6 +30,8 @@ export class UploadImagesService {
 
       uploadTask = storageRef.child(`${this.FOLDER_IMAGES}/${item.name}`).put(item.file);
 
+
+      // obtener info del estado de la subida
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot: any) => item.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
         (error) => console.error('Erro al subir archivo'),
@@ -37,7 +39,7 @@ export class UploadImagesService {
           item.url = uploadTask.snapshot.downloadURL;
           item.uploading = false;
           this.saveImage({
-            nombre: item.name, url: item.url
+            name: item.name, url: item.url
           });
         });
 
